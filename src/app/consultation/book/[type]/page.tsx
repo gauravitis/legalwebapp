@@ -45,8 +45,10 @@ export default function BookingPage({ params }: { params: { type: string } }) {
 
   const consultationType = consultationTypes[params.type as keyof typeof consultationTypes];
 
-  const handleDateChange = (date: Date) => {
-    setSelectedDate(date);
+  const handleDateChange = (value: Date | null) => {
+    if (value instanceof Date) {
+      setSelectedDate(value);
+    }
   };
 
   const handleTimeSelect = (time: string) => {

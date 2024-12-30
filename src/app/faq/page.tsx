@@ -45,7 +45,7 @@ export default function FAQPage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const categories = [...new Set(faqs.map(faq => faq.category))];
+  const categories = Array.from(new Set(faqs.map(faq => faq.category)));
   
   const filteredFaqs = selectedCategory 
     ? faqs.filter(faq => faq.category === selectedCategory)

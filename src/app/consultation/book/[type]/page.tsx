@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import { format, addDays, setHours, setMinutes } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import 'react-calendar/dist/Calendar.css';
+import type { Value } from 'react-calendar/dist/cjs/shared/types';
 
 const consultationTypes = {
   free: {
@@ -45,7 +46,7 @@ export default function BookingPage({ params }: { params: { type: string } }) {
 
   const consultationType = consultationTypes[params.type as keyof typeof consultationTypes];
 
-  const handleDateChange = (value: Date | null) => {
+  const handleDateChange = (value: Value, event: React.MouseEvent<HTMLButtonElement>) => {
     if (value instanceof Date) {
       setSelectedDate(value);
     }

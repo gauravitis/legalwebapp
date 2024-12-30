@@ -5,17 +5,6 @@ import { getClientEmailTemplate } from './emailTemplates/clientConfirmation';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-interface ConsultationBooking {
-  name: string;
-  email: string;
-  phone: string;
-  caseType: string;
-  message: string;
-  consultationType: string;
-  date: Date;
-  time: string;
-}
-
 export async function sendConsultationEmail(booking: ConsultationBooking) {
   const adminEmail = 'gauravsinghitis@gmail.com'; // Your email for testing
   

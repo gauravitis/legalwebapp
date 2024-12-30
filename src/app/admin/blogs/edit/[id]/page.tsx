@@ -58,7 +58,16 @@ export default function EditBlogPost({ params }: { params: { id: string } }) {
 
     try {
       const docRef = doc(db, 'blog_posts', params.id);
-      await updateDoc(docRef, formData);
+      const updateData = {
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        category: formData.category,
+        slug: formData.slug,
+        author: formData.author,
+        date: formData.date,
+      };
+      await updateDoc(docRef, updateData);
       router.push('/admin/blogs');
     } catch (err) {
       setError('Failed to update blog post');

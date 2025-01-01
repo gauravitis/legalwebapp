@@ -21,11 +21,17 @@ export default function Navbar() {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link href="/" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-              <Link href="#services" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Services</Link>
-              <Link href="#expertise" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Expertise</Link>
-              <Link href="#about" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">About</Link>
-              <Link href="#blog" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Blog</Link>
-              <Link href="#contact" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
+              <Link href="/#services" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Services</Link>
+              <Link href="/#expertise" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Expertise</Link>
+              <Link href="/#about" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">About</Link>
+              <Link href="/#blog" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Blog</Link>
+              <Link href="/contact" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
+              <Link
+                href="/consultation"
+                className="bg-[#4B6BFB] text-white hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium transition duration-150"
+              >
+                Book Consultation
+              </Link>
             </div>
           </div>
           {/* Mobile menu button */}
@@ -55,11 +61,17 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link href="/" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Home</Link>
-            <Link href="#services" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Services</Link>
-            <Link href="#expertise" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Expertise</Link>
-            <Link href="#about" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">About</Link>
-            <Link href="#blog" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Blog</Link>
-            <Link href="#contact" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
+            <Link href="/#services" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Services</Link>
+            <Link href="/#expertise" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Expertise</Link>
+            <Link href="/#about" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">About</Link>
+            <Link href="/#blog" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Blog</Link>
+            <Link href="/contact" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
+            <Link
+              href="/consultation"
+              className="bg-[#4B6BFB] text-white hover:bg-blue-600 block px-4 py-2 rounded-md text-base font-medium transition duration-150"
+            >
+              Book Consultation
+            </Link>
           </div>
         </div>
       )}

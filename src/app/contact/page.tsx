@@ -21,13 +21,43 @@ export default function ContactPage() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+    
     try {
-      await addDoc(collection(db, 'inquiries'), {
-        ...formData,
-        createdAt: new Date().toISOString(),
-        status: 'unread'
-      });
+      console.log('Starting form submission with data:', formData);
+      
+      // Save to Firebase
+      try {
+        const docRef = await addDoc(collection(db, 'inquiries'), {
+          ...formData,
+          createdAt: new Date().toISOString(),
+          status: 'unread'
+        });
+        console.log('Form data saved to Firebase with ID:', docRef.id);
+      } catch (firebaseError) {
+        console.error('Firebase error:', firebaseError);
+        throw new Error(`Failed to save to Firebase: ${firebaseError.message}`);
+      }
+
+      // Send email via API route
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+        console.log('API response:', result);
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed to send email');
+        }
+      } catch (emailError) {
+        console.error('Email error:', emailError);
+        throw new Error(`Failed to send email: ${emailError.message}`);
+      }
 
       setSuccess(true);
       setFormData({
@@ -38,8 +68,8 @@ export default function ContactPage() {
         message: '',
       });
     } catch (err) {
-      setError('Failed to send message. Please try again.');
-      console.error(err);
+      console.error('Form submission error:', err);
+      setError(err.message || 'Failed to submit form. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -108,7 +138,7 @@ export default function ContactPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
+                Full Name *
               </label>
               <input
                 type="text"
@@ -117,12 +147,13 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your full name"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
+                Email *
               </label>
               <input
                 type="email"
@@ -131,12 +162,13 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your email"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
+                Phone Number *
               </label>
               <input
                 type="tel"
@@ -145,12 +177,13 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your phone number"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Subject
+                Subject *
               </label>
               <input
                 type="text"
@@ -159,12 +192,13 @@ export default function ContactPage() {
                 onChange={handleChange}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter message subject"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Message
+                Message *
               </label>
               <textarea
                 name="message"
@@ -173,14 +207,17 @@ export default function ContactPage() {
                 required
                 rows={4}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              ></textarea>
+                placeholder="Enter your message"
+              />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className={`w-full bg-blue-900 text-white px-6 py-3 rounded-md font-semibold hover:bg-blue-800 transition duration-300 ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
+              className={`w-full py-3 px-4 text-white font-medium rounded-md ${
+                loading
+                  ? 'bg-blue-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
               }`}
             >
               {loading ? 'Sending...' : 'Send Message'}

@@ -23,8 +23,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     } catch (emailError) {
       console.error('Failed to send email:', emailError);
+      let errorMessage = 'Failed to send email notification';
+      
+      // Type guard to check if emailError is an Error object
+      if (emailError instanceof Error) {
+        errorMessage = emailError.message;
+      } else if (typeof emailError === 'string') {
+        errorMessage = emailError;
+      } else if (emailError && typeof emailError === 'object' && 'message' in emailError) {
+        errorMessage = String(emailError.message);
+      }
+      
       return NextResponse.json(
-        { error: `Failed to send email: ${emailError.message}` },
+        { error: `Failed to send email: ${errorMessage}` },
         { status: 500 }
       );
     }

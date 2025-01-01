@@ -58,15 +58,22 @@ export default function ContactPage() {
           body: JSON.stringify(formData),
         });
 
-        const result = await response.json();
-        console.log('API response:', result);
-
         if (!response.ok) {
-          throw new Error(result.error || 'Failed to send email');
+          throw new Error('Failed to send email');
         }
-      } catch (emailError) {
+      } catch (emailError: any) {
         console.error('Email error:', emailError);
-        throw new Error(`Failed to send email: ${emailError.message}`);
+        let errorMessage = 'Failed to send email';
+        
+        if (emailError instanceof Error) {
+          errorMessage = emailError.message;
+        } else if (typeof emailError === 'string') {
+          errorMessage = emailError;
+        } else if (emailError && typeof emailError === 'object' && 'message' in emailError) {
+          errorMessage = String(emailError.message);
+        }
+        
+        throw new Error(`Failed to send email: ${errorMessage}`);
       }
 
       setSuccess(true);

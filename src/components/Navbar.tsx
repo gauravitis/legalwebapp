@@ -1,80 +1,131 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNavClick = (href: string) => {
+    setIsOpen(false);
+    if (href.startsWith('/#')) {
+      // If we're not on the home page, first navigate to home
+      if (pathname !== '/') {
+        router.push('/');
+        // Wait for navigation to complete before scrolling
+        setTimeout(() => {
+          const element = document.querySelector(href.substring(1));
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      } else {
+        // If we're already on the home page, just scroll
+        const element = document.querySelector(href.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    } else {
+      router.push(href);
+    }
+  };
+
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/#about', label: 'About' },
+    { href: '/appointments', label: 'Book Appointment' },
+    { href: '/contact', label: 'Contact' },
+  ];
 
   return (
-    <nav className="bg-white shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center text-[#4B6BFB]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-              </svg>
-              <span className="ml-2 text-xl font-semibold">Adv. Ajay Kumar Singh</span>
-            </Link>
-          </div>
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <Link href="/" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Home</Link>
-              <Link href="/#services" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Services</Link>
-              <Link href="/#expertise" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Expertise</Link>
-              <Link href="/#about" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">About</Link>
-              <Link href="/#blog" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Blog</Link>
-              <Link href="/contact" className="text-gray-900 hover:text-[#4B6BFB] px-3 py-2 rounded-md text-sm font-medium">Contact</Link>
-              <Link
-                href="/consultation"
-                className="bg-[#4B6BFB] text-white hover:bg-blue-600 px-4 py-2 rounded-md text-sm font-medium transition duration-150"
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+    }`}>
+      <div className="container-custom">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold text-blue-600">Adv. Ajay Kumar Singh</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`nav-link ${
+                  pathname === link.href ? 'text-blue-600 font-semibold' : ''
+                }`}
               >
-                Book Consultation
-              </Link>
-            </div>
+                {link.label}
+              </button>
+            ))}
           </div>
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-[#4B6BFB] hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#4B6BFB]"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              <span className="sr-only">Open main menu</span>
-              {!mobileMenuOpen ? (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
-            </button>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            <div className="w-6 h-6 relative">
+              <span
+                className={`absolute h-0.5 w-full bg-gray-600 transform transition-all duration-300 ${
+                  isOpen ? 'rotate-45 top-3' : 'top-1'
+                }`}
+              />
+              <span
+                className={`absolute h-0.5 w-full bg-gray-600 top-3 transition-all duration-300 ${
+                  isOpen ? 'opacity-0' : 'opacity-100'
+                }`}
+              />
+              <span
+                className={`absolute h-0.5 w-full bg-gray-600 transform transition-all duration-300 ${
+                  isOpen ? '-rotate-45 top-3' : 'top-5'
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div
+          className={`md:hidden transition-all duration-300 ease-in-out ${
+            isOpen
+              ? 'max-h-64 opacity-100 visible mt-4'
+              : 'max-h-0 opacity-0 invisible'
+          }`}
+        >
+          <div className="py-2 space-y-2 bg-white rounded-lg shadow-lg">
+            {navLinks.map((link) => (
+              <button
+                key={link.href}
+                onClick={() => handleNavClick(link.href)}
+                className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors duration-300 ${
+                  pathname === link.href ? 'text-blue-600 font-semibold bg-blue-50' : ''
+                }`}
+              >
+                {link.label}
+              </button>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link href="/" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Home</Link>
-            <Link href="/#services" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Services</Link>
-            <Link href="/#expertise" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Expertise</Link>
-            <Link href="/#about" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">About</Link>
-            <Link href="/#blog" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Blog</Link>
-            <Link href="/contact" className="text-gray-900 hover:text-[#4B6BFB] block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
-            <Link
-              href="/consultation"
-              className="bg-[#4B6BFB] text-white hover:bg-blue-600 block px-4 py-2 rounded-md text-base font-medium transition duration-150"
-            >
-              Book Consultation
-            </Link>
-          </div>
-        </div>
-      )}
     </nav>
-  )
+  );
 }

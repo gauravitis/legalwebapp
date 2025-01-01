@@ -27,11 +27,30 @@ export default function AppointmentPage() {
     setError('');
     
     try {
+      // Save to Firebase
       await addDoc(collection(db, 'appointments'), {
         ...formData,
         createdAt: new Date().toISOString(),
         status: 'pending'
       });
+
+      // Send email notification
+      try {
+        const response = await fetch('/api/appointment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to send email notification');
+        }
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError);
+        // Don't show this error to the user since the appointment was saved
+      }
       
       setSuccess(true);
       setFormData({

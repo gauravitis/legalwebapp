@@ -35,7 +35,17 @@ export default function ContactPage() {
         console.log('Form data saved to Firebase with ID:', docRef.id);
       } catch (firebaseError) {
         console.error('Firebase error:', firebaseError);
-        throw new Error(`Failed to save to Firebase: ${firebaseError.message}`);
+        let errorMessage = 'Failed to save to Firebase';
+        
+        if (firebaseError instanceof Error) {
+          errorMessage = firebaseError.message;
+        } else if (typeof firebaseError === 'string') {
+          errorMessage = firebaseError;
+        } else if (firebaseError && typeof firebaseError === 'object' && 'message' in firebaseError) {
+          errorMessage = String(firebaseError.message);
+        }
+        
+        throw new Error(`Failed to save to Firebase: ${errorMessage}`);
       }
 
       // Send email via API route

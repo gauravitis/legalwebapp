@@ -86,7 +86,17 @@ export default function ContactPage() {
       });
     } catch (err) {
       console.error('Form submission error:', err);
-      setError(err.message || 'Failed to submit form. Please try again.');
+      let errorMessage = 'Failed to submit form. Please try again.';
+      
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'string') {
+        errorMessage = err;
+      } else if (err && typeof err === 'object' && 'message' in err) {
+        errorMessage = String(err.message);
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

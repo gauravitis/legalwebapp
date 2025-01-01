@@ -66,6 +66,141 @@ export default function Home() {
         </div>
       </section>
 
+      {/* RERA Advocacy Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-1">
+              <div className="relative h-[600px] rounded-lg overflow-hidden shadow-xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"
+                  alt="Modern Real Estate Building"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-lg transform hover:scale-105 transition duration-500"
+                  priority
+                />
+              </div>
+            </div>
+            <div className="order-2">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Trusted RERA Advocate: Resolving Property Issues, from Refunds to Possession and Compensation Claims
+              </h2>
+              <div className="space-y-4 text-gray-600">
+                <p>
+                  The Indian real estate sector has grown exponentially, fueled by rapid urbanization and economic progress. 
+                  With this expansion comes the need for clear regulations to protect homebuyers and ensure accountability among developers. 
+                  The Real Estate (Regulation and Development) Act (RERA) stands as a cornerstone for promoting transparency and fairness in this dynamic industry.
+                </p>
+                <p>
+                  As a dedicated RERA advocate, I specialize in addressing a wide range of property-related challenges. 
+                  Whether you're seeking a refund, possession of your property, or compensation for delays, I provide expert legal guidance to safeguard your interests. 
+                  My extensive experience in RERA matters enables me to navigate complex legal and regulatory frameworks, offering clients practical and effective solutions.
+                </p>
+                <p>
+                  My services are designed to be client-focused and cost-effective. From filing RERA complaints to ensuring compliance, 
+                  I am committed to simplifying the process for you. Whether your concerns involve legal disputes, financial matters, 
+                  or professional advice on real estate issues, I provide comprehensive support to help you achieve your goals.
+                </p>
+                <p>
+                  Let me be your trusted partner in resolving property challenges and securing your rightful interests under RERA. 
+                  Together, we'll work toward a successful resolution, every step of the way.
+                </p>
+              </div>
+              <div className="mt-8">
+                <Link
+                  href="/consultation"
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#4B6BFB] hover:bg-blue-700 transition duration-300"
+                >
+                  Schedule a Consultation
+                  <svg
+                    className="ml-2 -mr-1 w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Consumer Court Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Consumer Court "an Alternate To RERA"
+              </h2>
+              <div className="space-y-4 text-gray-600">
+                <p>
+                  Under the Consumer Protection Act 1986, dissatisfied buyers have the option to 
+                  seek redressal through consumer courts, which provide an alternative forum for 
+                  addressing issues of service deficiency by builders. We assist the clients in filing 
+                  consumer cases against the builder to claim refunds, possession, interest, and 
+                  compensation.
+                </p>
+                <p>
+                  This can be done simultaneously with a pending RERA case, 
+                  provided that the same relief is not claimed in both cases. The act establishes three 
+                  distinct bodies at the district, state, and national levels, enabling buyers to pursue 
+                  compensation such as refunds with interest, penalty for delays, litigation costs, 
+                  and more. The jurisdiction of the consumer court in which the case should be filed 
+                  will depend on the quantum of relief sought:
+                </p>
+                <ul className="list-disc pl-6 space-y-2 mt-4">
+                  <li>For claims up to 1 crore, the case can be filed in the District Commission.</li>
+                  <li>For claims between 1 crore and 10 crores, the case can be filed in the State Commission.</li>
+                  <li>For claims exceeding 10 crores, the case can be filed in the National Commission.</li>
+                </ul>
+              </div>
+              <div className="mt-8">
+                <Link
+                  href="/consultation"
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#4B6BFB] hover:bg-blue-700 transition duration-300"
+                >
+                  Discuss Your Case
+                  <svg
+                    className="ml-2 -mr-1 w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="relative h-[500px] rounded-lg overflow-hidden shadow-xl bg-[#00BCD4]">
+                <Image
+                  src="/images/consumer-rights.svg"
+                  alt="Consumer Rights and Protection"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  className="p-8 transform hover:scale-105 transition duration-500"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Section with Stats */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
